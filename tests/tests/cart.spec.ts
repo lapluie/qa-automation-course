@@ -13,13 +13,13 @@ test('добавление товара в корзину', async ({ page }) => 
   // Добавляем второй товар в корзину
   await page.locator('#add-to-cart-sauce-labs-bike-light').click();
   
-  // Проверяем, что счётчик корзины показывает 1
+  // Проверяем, что счётчик корзины показывает 2
   await expect(page.locator('.shopping_cart_badge')).toHaveText('2');
   
   // Открываем корзину
   await page.locator('.shopping_cart_link').click();
 
-  // Ждем когда загрузица страница корзины
+  // Ждём, когда загрузится страница корзины
   await expect(page.locator('.title')).toHaveText('Your Cart');
   
   // Проверяем, что первый товар в корзине
