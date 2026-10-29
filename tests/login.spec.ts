@@ -1,18 +1,12 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage';
 
 test('успешный логин', async ({ page }) => {
-    // 1. Открываем главную страницу (baseUrl из кончфига)
-    await page.goto('/');
 
-    // 2. Заполняем логин
-    await page.locator('#user-name').fill('standard_user');
+    const loginPage = new LoginPage(page);
 
-    // 3. Заполняем пароль
-    await page.locator('#password').fill('secret_sauce');
+    await loginPage.goto();
+    await loginPage.login('standard_user', 'secret_sauce');
 
-    // 4. Кликаем кнопку Login
-    await page.locator('#login-button').click();
-
-    // 5. Проверяем что попали на страницу Products
     await expect(page.locator('.title')).toHaveText('Products');
-})
+});
