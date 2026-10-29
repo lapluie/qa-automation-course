@@ -7,6 +7,6 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "tests/api/api-single-product.spec.ts", "tests/api/api-create-product.spec.ts", "tests/api/api-error.spec.ts", "tests/api/api-products.spec.ts"],
   "exclude": ["node_modules"]
 }
