@@ -1,8 +1,9 @@
 import { test, expect } from '../../fixtures/page-objects';
+import { ensureAuthenticated } from '../../fixtures/auth-helpers';
 
 test('добавление товаров в корзину', async ({ page, productsPage, cartPage }) => {
 
-  await productsPage.goto();
+  await ensureAuthenticated(page, 'standard_user', 'secret_sauce');
 
   await productsPage.expectPageLoaded();
  // Добавляем товары

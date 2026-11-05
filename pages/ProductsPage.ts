@@ -22,11 +22,43 @@ export class ProductsPage {
         await expect(this.pageTitle).toHaveText('Products');
     }
 
-    async expectBrokenImages() {
+    async expectBrokenImages(): Promise<void> {
         const images = this.page.locator('.inventory_item_img img');
         const count = await images.count();
+  
+        // Sanity: изображения вообще есть
+        expect(count).toBeGreaterThan(0);
+
+        // Получаем src всех изображений
+        const srcList: string[] = [];
         for (let i = 0; i < count; i++) {
-            await expect(images.nth(i)).toHaveAttribute('src', '');
+            const src = await images.nth(i).getAttribute('src');
+            srcList.push(src || '');
         }
+
+        // У problem_user все src одинаковые (заглушка с собакой)
+        const uniqueSources = new Set(srcList);
+  
+        // Проверяем, что ВСЕ src одинаковые = проблема!
+        expect(uniqueSources.size).toBe(1);
+  
+        // Дополнительно: проверяем, что это именно заглушка (имя файла сломанной картинки)
+        const brokenImageSrc = srcList[0];
+        expect(brokenImageSrc).toContain('sl-404');  // saucedemo использует "sl-404" для сломанных картинок
+    }
+
+    async expectDistinctImages(): Promise<void> {
+        const images = this.page.locator('.inventory_item_img img');
+        const count = await images.count();
+  
+        const srcList: string[] = [];
+        for (let i = 0; i < count; i++) {
+            const src = await images.nth(i).getAttribute('src');
+            srcList.push(src || '');
+        }
+
+        const uniqueSources = new Set(srcList);
+        // У обычного пользователя каждая картинка уникальна
+        expect(uniqueSources.size).toBe(count);
     }
 }
