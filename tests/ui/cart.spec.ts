@@ -1,18 +1,8 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/LoginPage';
-import { ProductsPage } from '../../pages/ProductsPage';
-import { CartPage } from '../../pages/CartPage';
+import { test, expect } from '../../fixtures/page-objects';
 
-test('добавление товаров в корзину', async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  const productsPage = new ProductsPage(page);
-  const cartPage = new CartPage(page);
+test('добавление товаров в корзину', async ({ productsPage, cartPage }) => {
 
-  // Логинимся
-  await loginPage.goto();
-  await loginPage.login('standard_user', 'secret_sauce');
-
-  // Добавляем товары
+ // Добавляем товары
   await productsPage.addProductToCart('sauce-labs-backpack');
   await productsPage.addProductToCart('sauce-labs-bike-light');
 

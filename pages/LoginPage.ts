@@ -1,4 +1,5 @@
 import { type Page, type Locator, expect } from "@playwright/test";
+import { CartPage } from "./CartPage";
 
 export class LoginPage {
     readonly page: Page;
@@ -23,6 +24,11 @@ export class LoginPage {
         await this.usernameInput.fill(username);
         await this.passwordInput.fill(password);
         await this.loginButton.click();
+    }
+
+    async expectSuccessfulLogin(): Promise<void> {
+        const cartPage = new CartPage(this.page);
+        await expect(cartPage.cartTitle).toHaveText('Products');
     }
 
     async expectErrorVisible() {
