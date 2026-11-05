@@ -1,7 +1,10 @@
 import { test, expect } from '../../fixtures/page-objects';
 
-test('добавление товаров в корзину', async ({ productsPage, cartPage }) => {
+test('добавление товаров в корзину', async ({ page, productsPage, cartPage }) => {
 
+  await productsPage.goto();
+
+  await productsPage.expectPageLoaded();
  // Добавляем товары
   await productsPage.addProductToCart('sauce-labs-backpack');
   await productsPage.addProductToCart('sauce-labs-bike-light');

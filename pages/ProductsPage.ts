@@ -9,6 +9,11 @@ export class ProductsPage {
         this.pageTitle = page.locator('.title');
     }
 
+    async goto(): Promise<void> {
+        await this.page.goto('/');
+        await this.expectPageLoaded();
+    }
+
     async addProductToCart(productId: string): Promise<void> {
         await this.page.locator(`#add-to-cart-${productId}`).click();
     }

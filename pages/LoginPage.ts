@@ -1,5 +1,4 @@
 import { type Page, type Locator, expect } from "@playwright/test";
-import { CartPage } from "./CartPage";
 
 export class LoginPage {
     readonly page: Page;
@@ -27,8 +26,8 @@ export class LoginPage {
     }
 
     async expectSuccessfulLogin(): Promise<void> {
-        const cartPage = new CartPage(this.page);
-        await expect(cartPage.cartTitle).toHaveText('Products');
+        await expect(this.page.locator('.title')).toHaveText('Products');
+        await this.page.waitForLoadState('networkidle');
     }
 
     async expectErrorVisible() {
